@@ -68,4 +68,3 @@ export function Header({ onMenuClick, theme, onThemeToggle }: HeaderProps) {
     </header>
   )
 }
-
