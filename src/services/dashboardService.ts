@@ -61,3 +61,4 @@ export const dashboardService = {
     return generateTopProducts(limit)
   },
 }
+
