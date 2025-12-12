@@ -71,3 +71,26 @@ export function useSalesGrouped() {
     queryFn: () => salesService.getSalesGrouped(dateRange, timeFrame),
   })
 }
+
+export function useTrendAnalysis() {
+  const { dateRange } = useFilterStore()
+
+  return useQuery({
+    queryKey: ['trendAnalysis', dateRange],
+    queryFn: () => salesService.getTrendAnalysis(dateRange),
+  })
+}
+
+export function useGrowthMetrics() {
+  return useQuery({
+    queryKey: ['growthMetrics'],
+    queryFn: () => salesService.getGrowthMetrics(),
+  })
+}
+
+export function useSparklineData(metric: string, days = 14) {
+  return useQuery({
+    queryKey: ['sparkline', metric, days],
+    queryFn: () => salesService.getSparklineData(metric, days),
+  })
+}

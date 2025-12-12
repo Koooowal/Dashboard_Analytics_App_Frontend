@@ -180,4 +180,62 @@ export const salesService = {
   getCategories() {
     return CATEGORIES
   },
+
+  async getTrendAnalysis(dateRange: DateRange): Promise<{
+    revenue: { label: string; current: number; previous: number; change: number; sparkline: number[] }[]
+    categories: { label: string; current: number; previous: number; change: number; sparkline: number[] }[]
+  }> {
+    await delay(400)
+    
+    const revenueTrends = ['Week 1', 'Week 2', 'Week 3', 'Week 4'].map(label => {
+      const current = 15000 + Math.random() * 25000
+      const previous = 12000 + Math.random() * 20000
+      return {
+        label,
+        current: Number(current.toFixed(2)),
+        previous: Number(previous.toFixed(2)),
+        change: Number(((current - previous) / previous * 100).toFixed(1)),
+        sparkline: Array.from({ length: 7 }, () => Math.random() * 5000 + 2000),
+      }
+    })
+
+    const categoryTrends = CATEGORIES.slice(0, 4).map(cat => {
+      const current = 8000 + Math.random() * 15000
+      const previous = 6000 + Math.random() * 12000
+      return {
+        label: cat.name,
+        current: Number(current.toFixed(2)),
+        previous: Number(previous.toFixed(2)),
+        change: Number(((current - previous) / previous * 100).toFixed(1)),
+        sparkline: Array.from({ length: 7 }, () => Math.random() * 3000 + 1000),
+      }
+    })
+
+    void dateRange
+    return { revenue: revenueTrends, categories: categoryTrends }
+  },
+
+  async getGrowthMetrics(): Promise<{
+    label: string
+    value: number
+    target: number
+  }[]> {
+    await delay(300)
+    return [
+      { label: 'Revenue Growth', value: 12.5 + Math.random() * 10, target: 25 },
+      { label: 'Customer Acquisition', value: 8.3 + Math.random() * 8, target: 20 },
+      { label: 'Order Volume', value: 15.2 + Math.random() * 12, target: 30 },
+      { label: 'Avg Order Value', value: -2.5 + Math.random() * 10, target: 15 },
+    ]
+  },
+
+  async getSparklineData(metric: string, days = 14): Promise<number[]> {
+    await delay(200)
+    void metric
+    const base = 1000 + Math.random() * 5000
+    return Array.from({ length: days }, (_, i) => {
+      const trend = 1 + (i / days) * 0.2
+      return Number((base * trend * (0.8 + Math.random() * 0.4)).toFixed(2))
+    })
+  },
 }

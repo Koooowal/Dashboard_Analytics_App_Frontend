@@ -18,6 +18,9 @@ export {
   useSalesComparison,
   useSalesByHour,
   useSalesGrouped,
+  useTrendAnalysis,
+  useGrowthMetrics,
+  useSparklineData,
 } from './useSalesData'
 export {
   useAllUsers,

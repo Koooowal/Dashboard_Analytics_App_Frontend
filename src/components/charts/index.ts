@@ -6,6 +6,7 @@ export { InteractiveAreaChart } from './InteractiveAreaChart'
 export { InteractiveBarChart } from './InteractiveBarChart'
 export { InteractivePieChart } from './InteractivePieChart'
 export { ChartCard } from './ChartCard'
+export { SparklineChart } from './SparklineChart'
 export {
   ChartTooltip,
   CurrencyTooltip,
