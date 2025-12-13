@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import { memo, type ReactNode } from 'react'
 import { RefreshCw, Download, Maximize2 } from 'lucide-react'
 
 interface ChartCardProps {
@@ -14,7 +14,7 @@ interface ChartCardProps {
   className?: string
 }
 
-export function ChartCard({
+export const ChartCard = memo(function ChartCard({
   title,
   subtitle,
   children,
@@ -45,31 +45,32 @@ export function ChartCard({
             <button
               onClick={onRefresh}
               disabled={isLoading}
-              className="rounded-lg p-2 text-[var(--text-muted)] transition-colors hover:bg-[var(--bg-tertiary)] hover:text-[var(--text-primary)] disabled:opacity-50"
-              title="Refresh"
+              className="rounded-lg p-2 text-[var(--text-muted)] transition-colors hover:bg-[var(--bg-tertiary)] hover:text-[var(--text-primary)] disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]"
+              aria-label="Refresh chart"
             >
               <RefreshCw
                 size={16}
                 className={isLoading ? 'animate-spin' : ''}
+                aria-hidden="true"
               />
             </button>
           )}
           {onExport && (
             <button
               onClick={onExport}
-              className="rounded-lg p-2 text-[var(--text-muted)] transition-colors hover:bg-[var(--bg-tertiary)] hover:text-[var(--text-primary)]"
-              title="Export"
+              className="rounded-lg p-2 text-[var(--text-muted)] transition-colors hover:bg-[var(--bg-tertiary)] hover:text-[var(--text-primary)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]"
+              aria-label="Export chart"
             >
-              <Download size={16} />
+              <Download size={16} aria-hidden="true" />
             </button>
           )}
           {onExpand && (
             <button
               onClick={onExpand}
-              className="rounded-lg p-2 text-[var(--text-muted)] transition-colors hover:bg-[var(--bg-tertiary)] hover:text-[var(--text-primary)]"
-              title="Expand"
+              className="rounded-lg p-2 text-[var(--text-muted)] transition-colors hover:bg-[var(--bg-tertiary)] hover:text-[var(--text-primary)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]"
+              aria-label="Expand chart"
             >
-              <Maximize2 size={16} />
+              <Maximize2 size={16} aria-hidden="true" />
             </button>
           )}
         </div>
@@ -96,7 +97,7 @@ export function ChartCard({
       </div>
     </div>
   )
-}
+})
 
 const SKELETON_HEIGHTS = [45, 72, 58, 85, 63, 48, 78, 55, 68, 42, 75, 60]
 

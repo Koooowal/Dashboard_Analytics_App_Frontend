@@ -23,6 +23,8 @@ import {
   InteractivePieChart,
   InteractiveBarChart,
 } from '@/components/charts'
+import { ExportButton } from '@/components/ui'
+import type { ExportFormat } from '@/components/ui'
 import {
   useSalesData,
   useSalesSummary,
@@ -34,10 +36,26 @@ import {
   useSparklineData,
   useFilterSync,
 } from '@/hooks'
-import { formatCurrency, formatCompact } from '@/utils/formatters'
+import { formatCurrency, formatCompact, exportToCSV } from '@/utils'
 
 export function Sales() {
   useFilterSync()
+
+  const handleExport = (format: ExportFormat) => {
+    if (format === 'csv' && salesData) {
+      exportToCSV(
+        salesData,
+        [
+          { key: 'date', header: 'Date' },
+          { key: 'category', header: 'Category' },
+          { key: 'revenue', header: 'Revenue', format: (v) => formatCurrency(v as number) },
+          { key: 'orders', header: 'Orders' },
+          { key: 'avgOrderValue', header: 'Avg Order Value', format: (v) => formatCurrency(v as number) },
+        ],
+        'sales-data'
+      )
+    }
+  }
 
   const { data: salesData, isLoading: salesLoading } = useSalesData()
   const { data: summary, isLoading: summaryLoading } = useSalesSummary()
@@ -127,10 +145,13 @@ export function Sales() {
 
   return (
     <div className="space-y-6">
-      <DashboardHeader
-        title="Sales"
-        subtitle="Track and manage your sales performance with detailed insights."
-      />
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+        <DashboardHeader
+          title="Sales"
+          subtitle="Track and manage your sales performance with detailed insights."
+        />
+        <ExportButton onExport={handleExport} formats={['csv']} />
+      </div>
 
       <FilterBar showSearch={false} showCategories />
 

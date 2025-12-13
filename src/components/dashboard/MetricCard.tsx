@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import type { LucideIcon } from 'lucide-react'
 import { TrendingUp, TrendingDown, Minus } from 'lucide-react'
 import { formatCurrency, formatCompact } from '@/utils/formatters'
@@ -15,7 +16,7 @@ interface MetricCardProps {
   subtitle?: string
 }
 
-export function MetricCard({
+export const MetricCard = memo(function MetricCard({
   title,
   value,
   change,
@@ -82,7 +83,7 @@ export function MetricCard({
       <div className="mt-3 flex items-center gap-2">
         {change !== undefined && (
           <div className={`flex items-center gap-1 ${trendColor}`}>
-            <TrendIcon size={16} />
+            <TrendIcon size={16} aria-hidden="true" />
             <span className="text-sm font-medium">
               {isPositive && !isNeutral ? '+' : ''}
               {change.toFixed(1)}%
@@ -95,4 +96,4 @@ export function MetricCard({
       </div>
     </div>
   )
-}
+})

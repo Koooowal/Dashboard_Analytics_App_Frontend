@@ -1,3 +1,4 @@
+import { memo, useCallback } from 'react'
 import { NavLink } from 'react-router-dom'
 import {
   LayoutDashboard,
@@ -30,7 +31,12 @@ const secondaryNavigation = [
   { name: 'Help', href: '/help', icon: HelpCircle },
 ]
 
-export function Sidebar({ isOpen, onClose }: SidebarProps) {
+export const Sidebar = memo(function Sidebar({ isOpen, onClose }: SidebarProps) {
+  const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
+    if (e.key === 'Escape') {
+      onClose()
+    }
+  }, [onClose])
   return (
     <>
       {isOpen && (
@@ -45,6 +51,9 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
         className={`fixed left-0 top-0 z-50 flex h-full w-64 min-w-[256px] flex-col border-r border-[var(--border-color)] bg-[var(--bg-primary)] transition-transform duration-300 ease-in-out lg:static lg:z-auto lg:translate-x-0 ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
+        role="navigation"
+        aria-label="Main navigation"
+        onKeyDown={handleKeyDown}
       >
         <div className="flex h-16 items-center justify-between border-b border-[var(--border-color)] px-4">
           <NavLink to="/" className="flex items-center gap-3">
@@ -69,48 +78,50 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
           </button>
         </div>
 
-        <nav className="flex-1 overflow-y-auto p-4">
-          <div className="space-y-1">
+        <nav className="flex-1 overflow-y-auto p-4" aria-label="Primary navigation">
+          <ul className="space-y-1" role="list">
             {navigation.map((item) => (
-              <NavLink
-                key={item.name}
-                to={item.href}
-                onClick={onClose}
-                className={({ isActive }) =>
-                  `flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
-                    isActive
-                      ? 'bg-[var(--color-primary)] text-white shadow-md'
-                      : 'text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)] hover:text-[var(--text-primary)]'
-                  }`
-                }
-              >
-                <item.icon size={20} />
-                {item.name}
-              </NavLink>
+              <li key={item.name}>
+                <NavLink
+                  to={item.href}
+                  onClick={onClose}
+                  className={({ isActive }) =>
+                    `flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] ${
+                      isActive
+                        ? 'bg-[var(--color-primary)] text-white shadow-md'
+                        : 'text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)] hover:text-[var(--text-primary)]'
+                    }`
+                  }
+                >
+                  <item.icon size={20} aria-hidden="true" />
+                  {item.name}
+                </NavLink>
+              </li>
             ))}
-          </div>
+          </ul>
 
-          <div className="my-6 border-t border-[var(--border-color)]" />
+          <div className="my-6 border-t border-[var(--border-color)]" role="separator" />
 
-          <div className="space-y-1">
+          <ul className="space-y-1" role="list">
             {secondaryNavigation.map((item) => (
-              <NavLink
-                key={item.name}
-                to={item.href}
-                onClick={onClose}
-                className={({ isActive }) =>
-                  `flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
-                    isActive
-                      ? 'bg-[var(--color-primary)] text-white shadow-md'
-                      : 'text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)] hover:text-[var(--text-primary)]'
-                  }`
-                }
-              >
-                <item.icon size={20} />
-                {item.name}
-              </NavLink>
+              <li key={item.name}>
+                <NavLink
+                  to={item.href}
+                  onClick={onClose}
+                  className={({ isActive }) =>
+                    `flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] ${
+                      isActive
+                        ? 'bg-[var(--color-primary)] text-white shadow-md'
+                        : 'text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)] hover:text-[var(--text-primary)]'
+                    }`
+                  }
+                >
+                  <item.icon size={20} aria-hidden="true" />
+                  {item.name}
+                </NavLink>
+              </li>
             ))}
-          </div>
+          </ul>
         </nav>
 
         <div className="border-t border-[var(--border-color)] p-4">
@@ -129,4 +140,4 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
       </aside>
     </>
   )
-}
+})
