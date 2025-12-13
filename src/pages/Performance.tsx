@@ -38,14 +38,11 @@ export function Performance() {
   const { data: teamPerformance, isLoading: teamLoading } = useTeamPerformance()
   const { data: comparisons, isLoading: comparisonsLoading } = useCompareUsers(selectedUserIds)
 
-  // Initialize with first 3 users when data loads
   useMemo(() => {
     if (users && users.length > 0 && selectedUserIds.length === 0) {
       setSelectedUserIds(users.slice(0, 3).map((u) => u.id))
     }
   }, [users])
-
-  // Comparison bar chart data
   const comparisonChartData = useMemo(() => {
     if (!comparisons || comparisons.length === 0) return []
 
@@ -57,7 +54,6 @@ export function Performance() {
     }))
   }, [comparisons])
 
-  // Team distribution pie chart
   const teamDistribution = useMemo(() => {
     if (!teamPerformance) return []
     return teamPerformance.map((team, index) => ({
@@ -67,7 +63,6 @@ export function Performance() {
     }))
   }, [teamPerformance])
 
-  // Performance KPIs
   const kpis = [
     {
       title: 'Team Avg Performance',
@@ -103,7 +98,6 @@ export function Performance() {
     },
   ]
 
-  // Performance metrics per user for the grouped bar chart
   const performanceMetrics = useMemo(() => {
     if (!users) return []
     return users.slice(0, 8).map((user) => ({
@@ -121,7 +115,6 @@ export function Performance() {
         subtitle="Monitor team performance, compare metrics, and track progress."
       />
 
-      {/* KPI Cards */}
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {kpis.map((kpi) => (
           <KPICard
@@ -137,7 +130,6 @@ export function Performance() {
         ))}
       </div>
 
-      {/* User Comparison Section */}
       <UserComparisonTable
         comparisons={comparisons ?? []}
         allUsers={users ?? []}
@@ -146,7 +138,6 @@ export function Performance() {
         isLoading={usersLoading || comparisonsLoading}
       />
 
-      {/* Comparison Charts */}
       <div className="grid gap-6 xl:grid-cols-2">
         <ChartCard
           title="User Performance Comparison"
@@ -180,7 +171,6 @@ export function Performance() {
         </ChartCard>
       </div>
 
-      {/* Target Achievement Chart */}
       <ChartCard
         title="Target vs Achievement"
         subtitle="Individual performance against targets"
@@ -198,7 +188,6 @@ export function Performance() {
         />
       </ChartCard>
 
-      {/* Leaderboard and Team Performance */}
       <div className="grid gap-6 xl:grid-cols-2">
         <Leaderboard
           rankings={rankings ?? []}
@@ -210,7 +199,6 @@ export function Performance() {
         <TeamPerformanceCard teams={teamPerformance ?? []} isLoading={teamLoading} />
       </div>
 
-      {/* Performance Summary Stats */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <div className="rounded-xl border border-[var(--border-color)] bg-gradient-to-br from-blue-500/10 to-blue-600/5 p-5">
           <div className="flex items-center justify-between">
@@ -222,11 +210,11 @@ export function Performance() {
                 {formatCompact(stats?.totalUsers ?? 0)}
               </p>
             </div>
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-500/20">
+            <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-blue-500/20">
               <Users size={24} className="text-blue-500" />
             </div>
           </div>
-          <div className="mt-3 flex items-center gap-1 text-sm">
+          <div className="flex items-center gap-1 mt-3 text-sm">
             <TrendingUp size={14} className="text-[var(--color-success)]" />
             <span className="text-[var(--color-success)]">+{stats?.newUsersThisMonth ?? 0}</span>
             <span className="text-[var(--text-muted)]">new this month</span>
@@ -243,11 +231,11 @@ export function Performance() {
                 {stats?.avgPerformance?.toFixed(1) ?? 0}%
               </p>
             </div>
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-green-500/20">
+            <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-green-500/20">
               <Target size={24} className="text-green-500" />
             </div>
           </div>
-          <div className="mt-3 flex items-center gap-1 text-sm">
+          <div className="flex items-center gap-1 mt-3 text-sm">
             <TrendingUp size={14} className="text-[var(--color-success)]" />
             <span className="text-[var(--color-success)]">+3.2%</span>
             <span className="text-[var(--text-muted)]">vs last quarter</span>
@@ -264,7 +252,7 @@ export function Performance() {
                 {teamPerformance?.[0]?.department ?? 'Sales'}
               </p>
             </div>
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-amber-500/20">
+            <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-amber-500/20">
               <Award size={24} className="text-amber-500" />
             </div>
           </div>
@@ -285,7 +273,7 @@ export function Performance() {
                   : 0}
               </p>
             </div>
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-purple-500/20">
+            <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-purple-500/20">
               <BarChart3 size={24} className="text-purple-500" />
             </div>
           </div>

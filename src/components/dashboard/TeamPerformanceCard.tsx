@@ -75,7 +75,7 @@ export function TeamPerformanceCard({ teams, isLoading = false }: TeamPerformanc
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-4">
                   <div
-                    className="flex h-12 w-12 items-center justify-center rounded-lg text-lg font-bold text-white"
+                    className="flex items-center justify-center w-12 h-12 text-lg font-bold text-white rounded-lg"
                     style={{ backgroundColor: color }}
                   >
                     {team.department.slice(0, 2).toUpperCase()}
@@ -100,7 +100,6 @@ export function TeamPerformanceCard({ teams, isLoading = false }: TeamPerformanc
                 </div>
               </div>
 
-              {/* Progress Bar */}
               <div className="mt-4">
                 <div className="flex items-center justify-between text-xs">
                   <span className="text-[var(--text-muted)]">Target Achievement</span>
@@ -110,7 +109,7 @@ export function TeamPerformanceCard({ teams, isLoading = false }: TeamPerformanc
                 </div>
                 <div className="mt-1.5 h-2 overflow-hidden rounded-full bg-[var(--bg-tertiary)]">
                   <div
-                    className="h-full rounded-full transition-all"
+                    className="h-full transition-all rounded-full"
                     style={{
                       width: `${Math.min(100, team.targetAchievement)}%`,
                       backgroundColor: color,

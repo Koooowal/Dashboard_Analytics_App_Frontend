@@ -72,7 +72,6 @@ export function UserComparisonTable({
           </p>
         </div>
 
-        {/* User Selector Dropdown */}
         <div className="relative">
           <button
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
@@ -109,9 +108,9 @@ export function UserComparisonTable({
                     <img
                       src={user.avatar}
                       alt={user.name}
-                      className="h-8 w-8 rounded-full"
+                      className="w-8 h-8 rounded-full"
                     />
-                    <div className="min-w-0 flex-1">
+                    <div className="flex-1 min-w-0">
                       <p className="truncate text-sm font-medium text-[var(--text-primary)]">
                         {user.name}
                       </p>
@@ -169,7 +168,7 @@ export function UserComparisonTable({
                     const isAboveAvg = userMetric.value > userMetric.teamAvg
 
                     return (
-                      <td key={comp.userId} className="whitespace-nowrap px-6 py-4 text-center">
+                      <td key={comp.userId} className="px-6 py-4 text-center whitespace-nowrap">
                         <div className="flex flex-col items-center gap-1">
                           <span className={`text-sm font-semibold ${
                             isAboveAvg ? 'text-[var(--color-success)]' : 'text-[var(--text-primary)]'

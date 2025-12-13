@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { DollarSign, ShoppingCart, Users, Activity } from 'lucide-react'
 import {
   ChartCard,
@@ -11,21 +12,34 @@ import {
   MetricCard,
   TopProductsTable,
   TopPerformers,
+  ActivityFeed,
+  LiveIndicator,
+  AutoRefreshToggle,
 } from '@/components/dashboard'
 import {
   useDashboardStats,
   useRevenueData,
   useCategorySales,
-  useActivity,
   useFilterSync,
   useTopProducts,
   useTopPerformers,
+  useRealTimeData,
 } from '@/hooks'
-import { formatCurrency } from '@/utils/formatters'
-import { formatRelativeTime } from '@/utils/dateHelpers'
+import { useRealtimeStore } from '@/store'
 
 export function Dashboard() {
   useFilterSync()
+  const { refreshData } = useRealTimeData()
+  const [isRefreshing, setIsRefreshing] = useState(false)
+
+  const {
+    isAutoRefreshEnabled,
+    refreshInterval,
+    lastUpdated,
+    events,
+    setAutoRefresh,
+    setRefreshInterval,
+  } = useRealtimeStore()
 
   const { data: stats, isLoading: statsLoading } = useDashboardStats()
   const {
@@ -38,10 +52,16 @@ export function Dashboard() {
     isLoading: categoryLoading,
     refetch: refetchCategory,
   } = useCategorySales()
-  const { data: activityData } = useActivity(8)
   const { data: topProducts, isLoading: productsLoading } = useTopProducts(5)
   const { data: topPerformers, isLoading: performersLoading } =
     useTopPerformers(5)
+
+  const handleManualRefresh = async () => {
+    setIsRefreshing(true)
+    refreshData()
+    await Promise.all([refetchRevenue(), refetchCategory()])
+    setTimeout(() => setIsRefreshing(false), 500)
+  }
 
   const metrics = [
     {
@@ -93,11 +113,29 @@ export function Dashboard() {
     })) ?? []
 
   return (
-    <div className="space-y-8">
-      <DashboardHeader
-        title="Dashboard"
-        subtitle="Welcome back! Here's an overview of your analytics."
-      />
+    <div className="space-y-6">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+        <DashboardHeader
+          title="Dashboard"
+          subtitle="Welcome back! Here's an overview of your analytics."
+        />
+        
+        <div className="flex flex-col gap-3 sm:items-end">
+          <AutoRefreshToggle
+            isEnabled={isAutoRefreshEnabled}
+            interval={refreshInterval}
+            onToggle={setAutoRefresh}
+            onIntervalChange={setRefreshInterval}
+          />
+          <LiveIndicator
+            lastUpdated={lastUpdated}
+            isAutoRefreshEnabled={isAutoRefreshEnabled}
+            refreshInterval={refreshInterval}
+            onRefresh={handleManualRefresh}
+            isRefreshing={isRefreshing}
+          />
+        </div>
+      </div>
 
       <FilterBar showSearch={false} showCategories />
 
@@ -150,7 +188,7 @@ export function Dashboard() {
       </div>
 
       <div className="grid gap-6 xl:grid-cols-3">
-        <div className="lg:col-span-2">
+        <div className="xl:col-span-2">
           <ChartCard
             title="Orders Trend"
             subtitle="Orders and revenue over time"
@@ -166,51 +204,11 @@ export function Dashboard() {
           </ChartCard>
         </div>
 
-        <div className="rounded-xl border border-[var(--border-color)] bg-[var(--bg-primary)] shadow-[var(--shadow-sm)]">
-          <div className="border-b border-[var(--border-color)] px-6 py-5">
-            <h3 className="text-base font-semibold text-[var(--text-primary)]">
-              Recent Activity
-            </h3>
-            <p className="mt-1 text-sm text-[var(--text-muted)]">
-              Latest updates and events
-            </p>
-          </div>
-          <div className="max-h-[360px] divide-y divide-[var(--border-color)] overflow-y-auto">
-            {activityData?.slice(0, 8).map((activity) => (
-              <div key={activity.id} className="px-6 py-4">
-                <div className="flex items-start gap-3">
-                  <div
-                    className={`mt-1 h-2 w-2 flex-shrink-0 rounded-full ${
-                      activity.type === 'sale'
-                        ? 'bg-[var(--color-success)]'
-                        : activity.type === 'order'
-                          ? 'bg-[var(--color-primary)]'
-                          : activity.type === 'user'
-                            ? 'bg-[var(--color-warning)]'
-                            : 'bg-[var(--color-danger)]'
-                    }`}
-                  />
-                  <div className="min-w-0 flex-1">
-                    <p className="truncate text-sm text-[var(--text-primary)]">
-                      {activity.message}
-                    </p>
-                    <div className="mt-0.5 flex items-center gap-2 text-xs text-[var(--text-muted)]">
-                      <span>{formatRelativeTime(activity.timestamp)}</span>
-                      {activity.value && (
-                        <>
-                          <span>•</span>
-                          <span className="font-medium text-[var(--color-success)]">
-                            {formatCurrency(activity.value)}
-                          </span>
-                        </>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+        <ActivityFeed
+          events={events}
+          maxItems={8}
+          showAnimation={isAutoRefreshEnabled}
+        />
       </div>
 
       <div className="grid gap-6 xl:grid-cols-2">

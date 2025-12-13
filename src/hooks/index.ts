@@ -32,3 +32,4 @@ export {
   useCompareUsers,
   usePerformanceTrends,
 } from './useUserData'
+export { useRealTimeData } from './useRealTimeData'

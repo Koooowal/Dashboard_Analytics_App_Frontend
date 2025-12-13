@@ -1,4 +1,6 @@
-import { Menu, Moon, Sun, Bell, Search, User } from 'lucide-react'
+import { Menu, Moon, Sun, Search, User } from 'lucide-react'
+import { NotificationCenter } from '@/components/dashboard'
+import { useRealtimeStore } from '@/store'
 
 interface HeaderProps {
   onMenuClick: () => void
@@ -7,6 +9,14 @@ interface HeaderProps {
 }
 
 export function Header({ onMenuClick, theme, onThemeToggle }: HeaderProps) {
+  const {
+    notifications,
+    unreadCount,
+    markAsRead,
+    markAllAsRead,
+    clearNotifications,
+  } = useRealtimeStore()
+
   return (
     <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-[var(--border-color)] bg-[var(--bg-primary)] px-6 shadow-[var(--shadow-sm)] transition-theme">
       <div className="flex items-center gap-4">
@@ -34,13 +44,13 @@ export function Header({ onMenuClick, theme, onThemeToggle }: HeaderProps) {
       </div>
 
       <div className="flex items-center gap-2">
-        <button
-          className="relative rounded-lg p-2 text-[var(--text-secondary)] transition-colors hover:bg-[var(--bg-tertiary)] hover:text-[var(--text-primary)]"
-          aria-label="Notifications"
-        >
-          <Bell size={20} />
-          <span className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-[var(--color-danger)]" />
-        </button>
+        <NotificationCenter
+          notifications={notifications}
+          unreadCount={unreadCount}
+          onMarkAsRead={markAsRead}
+          onMarkAllAsRead={markAllAsRead}
+          onClear={clearNotifications}
+        />
 
         <button
           onClick={onThemeToggle}

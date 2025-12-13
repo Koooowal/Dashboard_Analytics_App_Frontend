@@ -44,7 +44,6 @@ export function Analytics() {
   const { data: trendData, isLoading: trendLoading } = useTrendAnalysis()
   const { data: growthMetrics, isLoading: growthLoading } = useGrowthMetrics()
   
-  // Sparkline data for KPI cards
   const { data: revenueSparkline } = useSparklineData('revenue', 14)
   const { data: ordersSparkline } = useSparklineData('orders', 14)
   const { data: customersSparkline } = useSparklineData('customers', 14)
@@ -119,7 +118,6 @@ export function Analytics() {
 
       <FilterBar showSearch={false} showCategories />
 
-      {/* KPI Cards with Sparklines */}
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {kpis.map((kpi) => (
           <KPICard
@@ -136,7 +134,6 @@ export function Analytics() {
         ))}
       </div>
 
-      {/* Main Charts Row */}
       <div className="grid gap-6 xl:grid-cols-2">
         <ChartCard
           title="Revenue Trend"
@@ -174,7 +171,6 @@ export function Analytics() {
         </ChartCard>
       </div>
 
-      {/* Trend Analysis & Growth Section */}
       <div className="grid gap-6 xl:grid-cols-3">
         <div className="xl:col-span-2">
           <TrendAnalysisCard
@@ -206,7 +202,6 @@ export function Analytics() {
         />
       </div>
 
-      {/* Category Trends */}
       <div className="grid gap-6 xl:grid-cols-2">
         <TrendAnalysisCard
           title="Category Performance"
@@ -231,7 +226,6 @@ export function Analytics() {
         </ChartCard>
       </div>
 
-      {/* Hourly Analysis */}
       <ChartCard
         title="Hourly Sales Distribution"
         subtitle="Sales patterns throughout the day - identify peak hours"
@@ -250,11 +244,10 @@ export function Analytics() {
         />
       </ChartCard>
 
-      {/* Stats Summary */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <div className="rounded-xl border border-[var(--border-color)] bg-gradient-to-br from-blue-500/10 to-blue-600/5 p-5">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-500/20">
+            <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-blue-500/20">
               <BarChart3 size={20} className="text-blue-500" />
             </div>
             <div>
@@ -268,7 +261,7 @@ export function Analytics() {
 
         <div className="rounded-xl border border-[var(--border-color)] bg-gradient-to-br from-green-500/10 to-green-600/5 p-5">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-green-500/20">
+            <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-green-500/20">
               <ShoppingCart size={20} className="text-green-500" />
             </div>
             <div>
@@ -282,7 +275,7 @@ export function Analytics() {
 
         <div className="rounded-xl border border-[var(--border-color)] bg-gradient-to-br from-amber-500/10 to-amber-600/5 p-5">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-amber-500/20">
+            <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-amber-500/20">
               <PieChart size={20} className="text-amber-500" />
             </div>
             <div>
@@ -296,7 +289,7 @@ export function Analytics() {
 
         <div className="rounded-xl border border-[var(--border-color)] bg-gradient-to-br from-purple-500/10 to-purple-600/5 p-5">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-purple-500/20">
+            <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-purple-500/20">
               <Activity size={20} className="text-purple-500" />
             </div>
             <div>

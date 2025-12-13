@@ -47,7 +47,6 @@ export function useFilterSync() {
     if (search) {
       setSearchQuery(search)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {

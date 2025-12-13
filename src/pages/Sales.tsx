@@ -47,7 +47,6 @@ export function Sales() {
   const { data: topProducts, isLoading: productsLoading } = useTopProductsData(10)
   const { data: growthMetrics, isLoading: growthLoading } = useGrowthMetrics()
 
-  // Sparkline data for KPI cards
   const { data: revenueSparkline } = useSparklineData('revenue', 14)
   const { data: ordersSparkline } = useSparklineData('orders', 14)
   const { data: aovSparkline } = useSparklineData('aov', 14)
@@ -121,7 +120,6 @@ export function Sales() {
       orders: c.orders,
     })) ?? []
 
-  // Calculate summary stats
   const totalTransactions = salesData?.length ?? 0
   const avgRevenue = totalTransactions > 0 
     ? (salesData?.reduce((sum, s) => sum + s.revenue, 0) ?? 0) / totalTransactions 
@@ -136,7 +134,6 @@ export function Sales() {
 
       <FilterBar showSearch={false} showCategories />
 
-      {/* KPI Cards with Sparklines and Comparisons */}
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {kpis.map((kpi) => (
           <KPICard
@@ -154,7 +151,6 @@ export function Sales() {
         ))}
       </div>
 
-      {/* Charts Row */}
       <div className="grid gap-6 xl:grid-cols-2">
         <ChartCard
           title="Revenue Over Time"
@@ -189,7 +185,6 @@ export function Sales() {
         </ChartCard>
       </div>
 
-      {/* Category Performance Bar Chart */}
       <ChartCard
         title="Category Performance Breakdown"
         subtitle="Compare revenue and orders by category"
@@ -207,7 +202,6 @@ export function Sales() {
         />
       </ChartCard>
 
-      {/* Sales Table & Top Products */}
       <div className="grid gap-6 xl:grid-cols-3">
         <div className="xl:col-span-2">
           <SalesTable data={salesData ?? []} isLoading={salesLoading} />
@@ -240,7 +234,6 @@ export function Sales() {
         </div>
       </div>
 
-      {/* Summary Stats Cards */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <div className="rounded-xl border border-[var(--border-color)] bg-gradient-to-br from-blue-500/10 to-blue-600/5 p-5">
           <div className="flex items-center justify-between">
@@ -252,11 +245,11 @@ export function Sales() {
                 {formatCompact(totalTransactions)}
               </p>
             </div>
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-500/20">
+            <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-blue-500/20">
               <BarChart3 size={24} className="text-blue-500" />
             </div>
           </div>
-          <div className="mt-3 flex items-center gap-1 text-sm">
+          <div className="flex items-center gap-1 mt-3 text-sm">
             <TrendingUp size={14} className="text-[var(--color-success)]" />
             <span className="text-[var(--color-success)]">+12.5%</span>
             <span className="text-[var(--text-muted)]">vs last period</span>
@@ -273,11 +266,11 @@ export function Sales() {
                 {formatCurrency(avgRevenue)}
               </p>
             </div>
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-green-500/20">
+            <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-green-500/20">
               <DollarSign size={24} className="text-green-500" />
             </div>
           </div>
-          <div className="mt-3 flex items-center gap-1 text-sm">
+          <div className="flex items-center gap-1 mt-3 text-sm">
             <TrendingUp size={14} className="text-[var(--color-success)]" />
             <span className="text-[var(--color-success)]">+8.3%</span>
             <span className="text-[var(--text-muted)]">vs last period</span>
@@ -294,7 +287,7 @@ export function Sales() {
                 {summary?.topCategory ?? 'Electronics'}
               </p>
             </div>
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-amber-500/20">
+            <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-amber-500/20">
               <Award size={24} className="text-amber-500" />
             </div>
           </div>
@@ -313,7 +306,7 @@ export function Sales() {
                 {summary?.revenueGrowth?.toFixed(1) ?? '15.2'}%
               </p>
             </div>
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-purple-500/20">
+            <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-purple-500/20">
               {(summary?.revenueGrowth ?? 0) >= 0 ? (
                 <TrendingUp size={24} className="text-purple-500" />
               ) : (

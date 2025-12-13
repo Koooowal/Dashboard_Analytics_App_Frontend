@@ -52,7 +52,7 @@ export function Leaderboard({
     <div className="rounded-xl border border-[var(--border-color)] bg-[var(--bg-primary)] shadow-[var(--shadow-sm)]">
       <div className="flex items-center justify-between border-b border-[var(--border-color)] px-6 py-5">
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-amber-500/15">
+          <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-amber-500/15">
             <Trophy size={20} className="text-amber-500" />
           </div>
           <div>
@@ -90,7 +90,6 @@ export function Leaderboard({
                 isTopThree ? `bg-gradient-to-r ${rankStyle?.bg}` : ''
               }`}
             >
-              {/* Rank Badge */}
               <div
                 className={`flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full font-bold ${
                   isTopThree
@@ -105,7 +104,6 @@ export function Leaderboard({
                 )}
               </div>
 
-              {/* Avatar */}
               <div className="relative">
                 <img
                   src={ranking.user.avatar}
@@ -127,8 +125,7 @@ export function Leaderboard({
                 )}
               </div>
 
-              {/* User Info */}
-              <div className="min-w-0 flex-1">
+              <div className="flex-1 min-w-0">
                 <p className="truncate font-medium text-[var(--text-primary)]">
                   {ranking.user.name}
                 </p>
@@ -137,7 +134,6 @@ export function Leaderboard({
                 </p>
               </div>
 
-              {/* Sparkline */}
               {showSparkline && ranking.sparklineData.length > 0 && (
                 <div className="hidden w-20 sm:block">
                   <SparklineChart
@@ -148,7 +144,6 @@ export function Leaderboard({
                 </div>
               )}
 
-              {/* Revenue & Trend */}
               <div className="text-right">
                 <p className="font-semibold text-[var(--text-primary)]">
                   {formatCurrency(ranking.user.performance.revenue)}

@@ -41,7 +41,6 @@ export function Users() {
   const { data: teamPerformance, isLoading: teamLoading } = useTeamPerformance()
   const { data: performanceTrends } = usePerformanceTrends(selectedUserId || '', 30)
 
-  // Filter users
   const filteredUsers = useMemo(() => {
     if (!users) return []
     let filtered = [...users]
@@ -63,7 +62,6 @@ export function Users() {
     return filtered
   }, [users, searchQuery, roleFilter])
 
-  // Activity chart data - aggregated by role
   const activityByRole = useMemo(() => {
     if (!users) return []
     const roleData = new Map<string, { revenue: number; sales: number }>()
@@ -90,10 +88,8 @@ export function Users() {
         subtitle="Manage team members, track activity, and analyze performance."
       />
 
-      {/* User Stats */}
       <UserStatsCard stats={stats} isLoading={statsLoading} />
 
-      {/* Filters and View Toggle */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-3">
           <div className="relative">
@@ -155,9 +151,7 @@ export function Users() {
         </div>
       </div>
 
-      {/* Main Content Grid */}
       <div className="grid gap-6 xl:grid-cols-3">
-        {/* User Cards / List */}
         <div className="xl:col-span-2">
           {viewMode === 'grid' ? (
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -197,7 +191,7 @@ export function Users() {
                             alt={user.name}
                             className="h-12 w-12 rounded-full bg-[var(--bg-tertiary)]"
                           />
-                          <div className="min-w-0 flex-1">
+                          <div className="flex-1 min-w-0">
                             <p className="truncate font-medium text-[var(--text-primary)]">
                               {user.name}
                             </p>
@@ -207,7 +201,7 @@ export function Users() {
                           </div>
                         </div>
 
-                        <div className="mt-4 flex items-center justify-between text-sm">
+                        <div className="flex items-center justify-between mt-4 text-sm">
                           <span className="text-[var(--text-muted)]">Revenue</span>
                           <span className="font-semibold text-[var(--text-primary)]">
                             {formatCurrency(user.performance.revenue)}
@@ -229,7 +223,7 @@ export function Users() {
                           </div>
                           <div className="mt-1 h-1.5 overflow-hidden rounded-full bg-[var(--bg-tertiary)]">
                             <div
-                              className="h-full rounded-full transition-all"
+                              className="h-full transition-all rounded-full"
                               style={{
                                 width: `${Math.min(100, performance)}%`,
                                 backgroundColor: isAboveTarget
@@ -248,7 +242,7 @@ export function Users() {
               <div className="divide-y divide-[var(--border-color)]">
                 {usersLoading
                   ? Array.from({ length: 6 }).map((_, i) => (
-                      <div key={i} className="flex animate-pulse items-center gap-4 px-6 py-4">
+                      <div key={i} className="flex items-center gap-4 px-6 py-4 animate-pulse">
                         <div className="h-10 w-10 rounded-full bg-[var(--bg-tertiary)]" />
                         <div className="flex-1">
                           <div className="h-4 w-32 rounded bg-[var(--bg-tertiary)]" />
@@ -272,7 +266,7 @@ export function Users() {
                             alt={user.name}
                             className="h-10 w-10 rounded-full bg-[var(--bg-tertiary)]"
                           />
-                          <div className="min-w-0 flex-1">
+                          <div className="flex-1 min-w-0">
                             <p className="truncate font-medium text-[var(--text-primary)]">
                               {user.name}
                             </p>
@@ -282,7 +276,7 @@ export function Users() {
                               <span>{user.role}</span>
                             </div>
                           </div>
-                          <div className="hidden items-center gap-6 sm:flex">
+                          <div className="items-center hidden gap-6 sm:flex">
                             <div className="flex items-center gap-2 text-sm text-[var(--text-muted)]">
                               <Mail size={14} />
                               <span className="max-w-[150px] truncate">{user.email}</span>
@@ -313,7 +307,6 @@ export function Users() {
           )}
         </div>
 
-        {/* Leaderboard */}
         <Leaderboard
           rankings={rankings ?? []}
           isLoading={rankingsLoading}
@@ -321,7 +314,6 @@ export function Users() {
         />
       </div>
 
-      {/* Charts Row */}
       <div className="grid gap-6 xl:grid-cols-2">
         <ChartCard
           title="Activity by Role"
