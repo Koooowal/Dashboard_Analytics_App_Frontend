@@ -162,7 +162,7 @@ export function Dashboard() {
           onRefresh={() => refetchRevenue()}
         >
           <InteractiveAreaChart
-            data={revenueData ?? []}
+            data={(revenueData ?? []) as unknown as { [key: string]: string | number }[]}
             areas={[{ dataKey: 'revenue', name: 'Revenue', color: '#3b82f6' }]}
             xAxisKey="label"
             height={320}

@@ -1,4 +1,4 @@
-import { Users, TrendingUp, Target, Award } from 'lucide-react'
+import { Users } from 'lucide-react'
 import type { TeamPerformance } from '@/services/userService'
 import { formatCurrency } from '@/utils/formatters'
 
@@ -124,6 +124,7 @@ export function TeamPerformanceCard({ teams, isLoading = false }: TeamPerformanc
     </div>
   )
 }
+
 
 
 

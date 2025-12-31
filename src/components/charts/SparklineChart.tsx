@@ -11,7 +11,7 @@ interface SparklineChartProps {
   color?: string
   height?: number
   showGradient?: boolean
-  trend?: 'up' | 'down' | 'neutral'
+  trend?: 'up' | 'down' | 'neutral' | 'stable'
 }
 
 export function SparklineChart({
@@ -31,7 +31,9 @@ export function SparklineChart({
       ? 'var(--color-success)' 
       : trend === 'down' 
         ? 'var(--color-danger)' 
-        : 'var(--text-muted)'
+        : (trend === 'neutral' || trend === 'stable')
+          ? 'var(--text-muted)'
+          : color
     : color
 
   const gradientId = useMemo(() => `sparkline-gradient-${Math.random().toString(36).slice(2)}`, [])
@@ -60,6 +62,7 @@ export function SparklineChart({
     </ResponsiveContainer>
   )
 }
+
 
 
 

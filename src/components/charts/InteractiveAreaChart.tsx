@@ -112,17 +112,15 @@ export function InteractiveAreaChart({
           data={data}
           margin={defaultMargins}
           onMouseMove={(e) => {
-            if (e.activeTooltipIndex !== undefined) {
+            if (e.activeTooltipIndex !== undefined && typeof e.activeTooltipIndex === 'number') {
               setActiveIndex(e.activeTooltipIndex)
             }
           }}
           onMouseLeave={() => setActiveIndex(null)}
           onClick={(e) => {
-            if (e.activePayload?.[0] && e.activeTooltipIndex !== undefined) {
-              handleClick(
-                e.activePayload[0].payload as DataPoint,
-                e.activeTooltipIndex
-              )
+            const payload = (e as unknown as { activePayload?: { payload: DataPoint }[] }).activePayload
+            if (payload?.[0] && e.activeTooltipIndex !== undefined && typeof e.activeTooltipIndex === 'number') {
+              handleClick(payload[0].payload, e.activeTooltipIndex)
             }
           }}
         >

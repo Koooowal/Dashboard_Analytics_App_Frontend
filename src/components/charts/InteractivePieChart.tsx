@@ -14,6 +14,7 @@ interface PieDataPoint {
   name: string
   value: number
   color?: string
+  [key: string]: string | number | undefined
 }
 
 interface InteractivePieChartProps {
@@ -143,8 +144,7 @@ export function InteractivePieChart({
             paddingAngle={2}
             dataKey="value"
             nameKey="name"
-            activeIndex={activeIndex ?? undefined}
-            activeShape={renderActiveShape as unknown as undefined}
+            activeShape={activeIndex !== null ? (renderActiveShape as never) : undefined}
             onMouseEnter={onPieEnter}
             onMouseLeave={onPieLeave}
             onClick={(_, index) => {

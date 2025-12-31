@@ -1,8 +1,14 @@
 import type { LegendProps } from 'recharts'
 
+interface LegendPayload {
+  value: string
+  color?: string
+}
+
 interface CustomLegendProps extends LegendProps {
   onItemClick?: (dataKey: string) => void
   hiddenItems?: string[]
+  payload?: LegendPayload[]
 }
 
 export function ChartLegend({
@@ -14,7 +20,7 @@ export function ChartLegend({
 
   return (
     <div className="flex flex-wrap justify-center gap-4 pt-4">
-      {payload.map((entry, index) => {
+      {payload.map((entry: LegendPayload, index: number) => {
         const isHidden = hiddenItems.includes(entry.value)
 
         return (

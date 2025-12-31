@@ -1,7 +1,6 @@
 import { useState, useMemo } from 'react'
 import {
   TrendingUp,
-  TrendingDown,
   Target,
   Award,
   BarChart3,

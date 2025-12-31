@@ -1,3 +1,12 @@
 export * from './dashboard'
-export * from './chart'
+export type {
+  LineChartData,
+  BarChartData,
+  PieChartData,
+  AreaChartData,
+  ChartType,
+  ChartConfig,
+  TooltipPayload,
+  ChartMargins,
+} from './chart'
 export * from './api'

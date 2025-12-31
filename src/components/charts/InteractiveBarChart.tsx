@@ -107,7 +107,7 @@ export function InteractiveBarChart({
           layout={layout}
           margin={defaultMargins}
           onMouseMove={(e) => {
-            if (e.activeTooltipIndex !== undefined) {
+            if (e.activeTooltipIndex !== undefined && typeof e.activeTooltipIndex === 'number') {
               setActiveIndex(e.activeTooltipIndex)
             }
           }}
@@ -209,7 +209,7 @@ export function InteractiveBarChart({
                 isAnimationActive={true}
                 animationDuration={800}
                 onClick={(data, index) =>
-                  onBarClick?.(data as DataPoint, index)
+                  onBarClick?.(data as unknown as DataPoint, index)
                 }
                 cursor={onBarClick ? 'pointer' : 'default'}
               >

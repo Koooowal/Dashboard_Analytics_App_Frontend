@@ -13,6 +13,7 @@ interface PieDataPoint {
   name: string
   value: number
   color?: string
+  [key: string]: string | number | undefined
 }
 
 interface PieChartProps {
@@ -32,21 +33,21 @@ interface PieChartProps {
 const RADIAN = Math.PI / 180
 
 interface LabelProps {
-  cx: number
-  cy: number
-  midAngle: number
-  innerRadius: number
-  outerRadius: number
-  percent: number
+  cx?: number
+  cy?: number
+  midAngle?: number
+  innerRadius?: number
+  outerRadius?: number
+  percent?: number
 }
 
 const renderCustomLabel = ({
-  cx,
-  cy,
-  midAngle,
-  innerRadius,
-  outerRadius,
-  percent,
+  cx = 0,
+  cy = 0,
+  midAngle = 0,
+  innerRadius = 0,
+  outerRadius = 0,
+  percent = 0,
 }: LabelProps) => {
   const radius = innerRadius + (outerRadius - innerRadius) * 0.5
   const x = cx + radius * Math.cos(-midAngle * RADIAN)
@@ -99,7 +100,7 @@ export function PieChartComponent({
           isAnimationActive={animate}
           animationDuration={800}
           animationEasing="ease-out"
-          label={showLabels ? renderCustomLabel : false}
+          label={showLabels ? (renderCustomLabel as unknown as undefined) : false}
           labelLine={false}
         >
           {data.map((entry, index) => (

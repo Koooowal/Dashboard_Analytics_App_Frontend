@@ -21,7 +21,7 @@ const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
 export const dashboardService = {
   async getStats(
-    dateRange?: DateRange,
+    _dateRange?: DateRange,
     categories?: string[]
   ): Promise<DashboardStats> {
     await delay(300)
@@ -60,7 +60,7 @@ export const dashboardService = {
   },
 
   async getCategorySales(
-    dateRange?: DateRange,
+    _dateRange?: DateRange,
     categories?: string[]
   ): Promise<CategorySales[]> {
     await delay(350)
@@ -93,7 +93,7 @@ export const dashboardService = {
 
   async getTopProducts(
     limit = 5,
-    dateRange?: DateRange,
+    _dateRange?: DateRange,
     categories?: string[]
   ): Promise<TopProduct[]> {
     await delay(300)

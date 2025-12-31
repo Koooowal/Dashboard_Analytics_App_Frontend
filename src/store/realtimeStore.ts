@@ -44,7 +44,7 @@ interface RealtimeState {
 
 const generateId = () => Math.random().toString(36).substring(2, 11)
 
-export const useRealtimeStore = create<RealtimeState>((set, get) => ({
+export const useRealtimeStore = create<RealtimeState>((set, _get) => ({
   isAutoRefreshEnabled: true,
   refreshInterval: 30,
   lastUpdated: null,
@@ -102,6 +102,7 @@ export const useRealtimeStore = create<RealtimeState>((set, get) => ({
 
   clearEvents: () => set({ events: [] }),
 }))
+
 
 
 

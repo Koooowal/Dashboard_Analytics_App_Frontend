@@ -249,3 +249,4 @@ export function SalesTable({ data, isLoading = false }: SalesTableProps) {
 
 
 
+

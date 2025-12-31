@@ -1,4 +1,4 @@
-import { RefreshCw, Clock, Wifi, WifiOff } from 'lucide-react'
+import { RefreshCw, Clock, Wifi } from 'lucide-react'
 
 interface LiveIndicatorProps {
   lastUpdated: Date | null
@@ -70,6 +70,7 @@ export function LiveIndicator({
     </div>
   )
 }
+
 
 
 

@@ -1,12 +1,10 @@
 import { useState, useMemo } from 'react'
 import {
-  Users as UsersIcon,
   Search,
   Filter,
   Grid,
   List,
   Mail,
-  Calendar,
   TrendingUp,
   TrendingDown,
 } from 'lucide-react'
@@ -24,7 +22,7 @@ import {
   useTeamPerformance,
   usePerformanceTrends,
 } from '@/hooks'
-import { formatCurrency, formatCompact } from '@/utils/formatters'
+import { formatCurrency } from '@/utils/formatters'
 
 type ViewMode = 'grid' | 'list'
 type FilterRole = 'all' | 'admin' | 'manager' | 'sales' | 'support'

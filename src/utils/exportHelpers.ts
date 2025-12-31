@@ -103,7 +103,7 @@ export function generateReportHTML(
   `
 }
 
-export function exportToPDF(html: string, filename: string): void {
+export function exportToPDF(html: string, _filename: string): void {
   const printWindow = window.open('', '_blank')
   if (!printWindow) return
 
@@ -155,6 +155,7 @@ export function generateTableHTML<T extends Record<string, unknown>>(
 
   return `<table><thead><tr>${headers}</tr></thead><tbody>${rows}</tbody></table>`
 }
+
 
 
 

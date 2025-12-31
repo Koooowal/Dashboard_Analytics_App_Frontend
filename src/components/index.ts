@@ -1,4 +1,40 @@
 export * from './ui'
-export * from './charts'
+export {
+  AreaChartComponent,
+  BarChartComponent,
+  LineChartComponent,
+  PieChartComponent,
+  SparklineChart,
+  InteractiveAreaChart,
+  InteractiveBarChart,
+  InteractivePieChart,
+  ChartTooltip,
+  CurrencyTooltip,
+  PercentageTooltip,
+  ChartLegend,
+  chartTheme,
+  CHART_COLORS,
+  CHART_COLORS_RGB,
+  defaultMargins,
+} from './charts'
 export * from './layout'
-export * from './dashboard'
+export {
+  MetricCard,
+  DashboardHeader,
+  FilterBar,
+  FilterPills,
+  TopProductsTable,
+  TopPerformers,
+  KPICard,
+  SalesTable,
+  TrendAnalysisCard,
+  GrowthIndicator,
+  Leaderboard,
+  UserStatsCard,
+  UserComparisonTable,
+  TeamPerformanceCard,
+  ActivityFeed,
+  NotificationCenter,
+  LiveIndicator,
+  AutoRefreshToggle,
+} from './dashboard'

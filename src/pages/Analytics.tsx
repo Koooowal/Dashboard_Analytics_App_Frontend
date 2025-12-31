@@ -141,7 +141,7 @@ export function Analytics() {
           isLoading={revenueLoading}
         >
           <InteractiveAreaChart
-            data={revenueData ?? []}
+            data={(revenueData ?? []) as unknown as { [key: string]: string | number }[]}
             areas={[
               { dataKey: 'revenue', name: 'Current', color: '#3b82f6' },
               { dataKey: 'previousRevenue', name: 'Previous', color: '#94a3b8' },

@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState } from 'react'
 import {
   FileText,
   Calendar,
@@ -72,8 +72,6 @@ export function Reports() {
   const { data: users } = useAllUsers()
 
   const handleExport = (format: ExportFormat) => {
-    const reportConfig = REPORT_TYPES.find((r) => r.id === selectedReport)
-
     switch (format) {
       case 'csv':
         handleCSVExport()
@@ -95,7 +93,7 @@ export function Reports() {
       case 'sales':
         if (revenueData) {
           exportToCSV(
-            revenueData,
+            revenueData as unknown as Record<string, unknown>[],
             [
               { key: 'date', header: 'Date' },
               { key: 'label', header: 'Period' },
@@ -109,7 +107,7 @@ export function Reports() {
       case 'products':
         if (topProducts) {
           exportToCSV(
-            topProducts,
+            topProducts as unknown as Record<string, unknown>[],
             [
               { key: 'name', header: 'Product' },
               { key: 'category', header: 'Category' },
@@ -124,7 +122,7 @@ export function Reports() {
       case 'users':
         if (users) {
           exportToCSV(
-            users,
+            users as unknown as Record<string, unknown>[],
             [
               { key: 'name', header: 'Name' },
               { key: 'email', header: 'Email' },
@@ -138,7 +136,7 @@ export function Reports() {
       default:
         if (categoryData) {
           exportToCSV(
-            categoryData,
+            categoryData as unknown as Record<string, unknown>[],
             [
               { key: 'category', header: 'Category' },
               { key: 'revenue', header: 'Revenue', format: (v) => formatCurrency(v as number) },
@@ -152,13 +150,13 @@ export function Reports() {
   }
 
   const handleJSONExport = () => {
-    const data = {
-      overview: { stats, categories: categoryData },
-      sales: revenueData,
-      products: topProducts,
-      users: users,
+    const dataMap: Record<ReportType, unknown[]> = {
+      overview: [{ stats, categories: categoryData }],
+      sales: revenueData ?? [],
+      products: topProducts ?? [],
+      users: users ?? [],
     }
-    exportToJSON(data[selectedReport] || data.overview, `${selectedReport}-report`)
+    exportToJSON(dataMap[selectedReport] ?? dataMap.overview, `${selectedReport}-report`)
   }
 
   const handlePDFExport = () => {
@@ -187,7 +185,7 @@ export function Reports() {
     switch (selectedReport) {
       case 'sales':
         if (revenueData) {
-          tableHTML = generateTableHTML(revenueData as Record<string, unknown>[], [
+          tableHTML = generateTableHTML(revenueData as unknown as Record<string, unknown>[], [
             { key: 'label', header: 'Period' },
             { key: 'revenue', header: 'Revenue', format: (v) => formatCurrency(v as number) },
             { key: 'orders', header: 'Orders' },

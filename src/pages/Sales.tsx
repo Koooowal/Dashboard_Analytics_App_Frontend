@@ -44,7 +44,7 @@ export function Sales() {
   const handleExport = (format: ExportFormat) => {
     if (format === 'csv' && salesData) {
       exportToCSV(
-        salesData,
+        salesData as unknown as Record<string, unknown>[],
         [
           { key: 'date', header: 'Date' },
           { key: 'category', header: 'Category' },
@@ -179,7 +179,7 @@ export function Sales() {
           isLoading={revenueLoading}
         >
           <InteractiveAreaChart
-            data={revenueData ?? []}
+            data={(revenueData ?? []) as unknown as { [key: string]: string | number }[]}
             areas={[
               { dataKey: 'revenue', name: 'Current', color: '#3b82f6' },
               { dataKey: 'previousRevenue', name: 'Previous', color: '#94a3b8' },

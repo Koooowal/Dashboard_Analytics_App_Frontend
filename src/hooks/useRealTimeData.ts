@@ -34,7 +34,7 @@ const ALERT_MESSAGES = [
   'Goal milestone reached',
 ]
 
-const randomFromArray = <T,>(arr: T[]): T =>
+const randomFromArray = <T,>(arr: readonly T[]): T =>
   arr[Math.floor(Math.random() * arr.length)]
 
 const randomValue = (min: number, max: number) =>
@@ -54,14 +54,14 @@ export function useRealTimeData() {
 
   const generateRandomEvent = useCallback(() => {
     const eventTypes = ['sale', 'order', 'user', 'alert'] as const
-    const type = randomFromArray(eventTypes)
+    const eventType = randomFromArray(eventTypes)
     
-    let title: string
-    let description: string
+    let title = ''
+    let description = ''
     let value: number | undefined
     let notificationType: 'success' | 'warning' | 'info' = 'info'
 
-    switch (type) {
+    switch (eventType) {
       case 'sale':
         title = 'New Sale'
         description = randomFromArray(SALE_MESSAGES)
@@ -86,7 +86,7 @@ export function useRealTimeData() {
     }
 
     addEvent({
-      type,
+      type: eventType,
       title,
       description,
       value,
@@ -153,6 +153,7 @@ export function useRealTimeData() {
     isAutoRefreshEnabled,
   }
 }
+
 
 
 

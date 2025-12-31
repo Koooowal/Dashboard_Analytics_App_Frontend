@@ -1,10 +1,18 @@
 import type { TooltipProps } from 'recharts'
 import { formatCurrency, formatNumber } from '@/utils/formatters'
 
+interface TooltipPayloadEntry {
+  value?: number
+  name?: string
+  color?: string
+}
+
 interface CustomTooltipProps extends TooltipProps<number, string> {
   valuePrefix?: string
   valueSuffix?: string
   formatValue?: (value: number) => string
+  payload?: TooltipPayloadEntry[]
+  label?: string
 }
 
 export function ChartTooltip({
@@ -23,7 +31,7 @@ export function ChartTooltip({
         {label}
       </p>
       <div className="space-y-1">
-        {payload.map((entry, index) => (
+        {payload.map((entry: TooltipPayloadEntry, index: number) => (
           <div key={index} className="flex items-center gap-2 text-sm">
             <span
               className="h-2.5 w-2.5 rounded-full"
