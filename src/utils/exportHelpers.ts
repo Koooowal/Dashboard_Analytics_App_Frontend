@@ -156,3 +156,7 @@ export function generateTableHTML<T extends Record<string, unknown>>(
   return `<table><thead><tr>${headers}</tr></thead><tbody>${rows}</tbody></table>`
 }
 
+
+
+
+
